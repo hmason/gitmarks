@@ -56,8 +56,7 @@ class gitMark(object):
             pipe.wait()
             
     def gitCommit(self, msg):
-        pipe = subprocess.Popen("git commit -m '%s'" % msg, shell=True)
-        pipe.wait()
+        subprocess.call(['git', 'commit', '-m', msg])
         
     def gitPush(self):
         pipe = subprocess.Popen("git push origin master", shell=True)
