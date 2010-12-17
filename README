@@ -44,6 +44,20 @@ python delicious_import.py [username] [password]
 
 (be patient if you have a lot of them.)
 
+
+===
+Web
+===
+
+Run the gitmark_web server:
+
+python gitmark_web.py
+
+Copy this bookmarklet to your browser:
+
+javascript:(function(){void(open('http://localhost:8080/new?url='+window.location,'gitmark','resizable,scrollbars,width=250,height=250'))})();
+
+
 =======
 License
 =======
