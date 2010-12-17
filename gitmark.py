@@ -17,6 +17,12 @@ from optparse import OptionParser
 
 from settings import *
 
+# Arguments are passed directly to git, not through the shell, to avoid the
+# need for shell escaping. On Windows, however, commands need to go through the
+# shell for git to be found on the PATH, but escaping is automatic there. So
+# send git commands through the shell on Windows, and directly everywhere else.
+USE_SHELL = os.name == 'nt'
+
 class gitMark(object):
     
     def __init__(self, options, args):
@@ -50,10 +56,10 @@ class gitMark(object):
             self.gitPush()
 
     def gitAdd(self, files):
-        subprocess.call(['git', 'add'] + files)
+        subprocess.call(['git', 'add'] + files, shell=USE_SHELL)
         
     def gitCommit(self, msg):
-        subprocess.call(['git', 'commit', '-m', msg])
+        subprocess.call(['git', 'commit', '-m', msg], shell=USE_SHELL)
         
     def gitPush(self):
         pipe = subprocess.Popen("git push origin master", shell=True)
