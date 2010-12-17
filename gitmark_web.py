@@ -38,9 +38,4 @@ def create():
 
     return template("create")
 
-@route("/:name")
-def index(name = "World"):
-  hi = request.GET.get('hi')
-  return "<b>Hello %s</b> (%s)" % (name, hi)
-
 run(host="localhost", port="8080", reloader=True)
