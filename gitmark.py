@@ -86,9 +86,15 @@ class gitMark(object):
         return m.hexdigest()
         
     def getContent(self, url):
-        h = urllib.urlopen(url)
-        content = h.read()
-        h.close()
+        try:
+            h = urllib.urlopen(url)
+            content = h.read()
+            h.close()
+        except IOError, e:
+            print >>sys.stderr, ("Error: could not retrieve the content of a"
+                " URL. The bookmark will be saved, but its content won't be"
+                " searchable. URL: <%s>. Error: %s" % (url, e))
+            content = ''
         return content
         
 
