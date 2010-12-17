@@ -17,6 +17,12 @@ from optparse import OptionParser
 
 from settings import *
 
+# Arguments are passed directly to git, not through the shell, to avoid the
+# need for shell escaping. On Windows, however, commands need to go through the
+# shell for git to be found on the PATH, but escaping is automatic there. So
+# send git commands through the shell on Windows, and directly everywhere else.
+USE_SHELL = os.name == 'nt'
+
 class gitMark(object):
     
     def __init__(self, options, args):
@@ -50,14 +56,10 @@ class gitMark(object):
             self.gitPush()
 
     def gitAdd(self, files):
-        for f in files:
-            cmd = 'git add %s' % f
-            pipe = subprocess.Popen(cmd, shell=True)
-            pipe.wait()
-            
+        subprocess.call(['git', 'add'] + files, shell=USE_SHELL)
+        
     def gitCommit(self, msg):
-        pipe = subprocess.Popen("git commit -m '%s'" % msg, shell=True)
-        pipe.wait()
+        subprocess.call(['git', 'commit', '-m', msg], shell=USE_SHELL)
         
     def gitPush(self):
         pipe = subprocess.Popen("git push origin master", shell=True)
@@ -90,9 +92,15 @@ class gitMark(object):
         return m.hexdigest()
         
     def getContent(self, url):
-        h = urllib.urlopen(url)
-        content = h.read()
-        h.close()
+        try:
+            h = urllib.urlopen(url)
+            content = h.read()
+            h.close()
+        except IOError, e:
+            print >>sys.stderr, ("Error: could not retrieve the content of a"
+                " URL. The bookmark will be saved, but its content won't be"
+                " searchable. URL: <%s>. Error: %s" % (url, e))
+            content = ''
         return content
         
 
