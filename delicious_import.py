@@ -37,9 +37,16 @@ class delicious_import(object):
             options['push'] = False
             options['msg'] = desc
             
-            args = [url]
+            # Set the authoring date of the commit based on the imported
+            # timestamp. git reads the GIT_AUTHOR_DATE environment var.
+            os.environ['GIT_AUTHOR_DATE'] = timestamp
 
+            args = [url]
             g = gitMark(options, args)
+            
+            # Reset authoring timestamp (abundance of caution)
+            del os.environ['GIT_AUTHOR_DATE']
+            
             if post_list.length > 1:
                 print '%d of %d bookmarks imported (%d%%)' % (
                     post_index + 1, post_list.length,
