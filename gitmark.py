@@ -32,6 +32,10 @@ class gitMark(object):
         tags.extend(options['tags'].split(','))
         for tag in tags:
             t = tag.strip()
+            if not t:
+                continue
+            if '/' in t:
+                t = ''.join(t.split('/'))
             modified.append(self.saveTagData(t, url, title, content_filename))
             
         self.gitAdd(modified)
