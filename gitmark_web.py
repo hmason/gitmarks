@@ -5,7 +5,7 @@ javascript:(function(){void(open('http://localhost:8080/new?url='+window.locatio
 """
 
 import bottle
-bottle.debug(True)
+bottle.debug(False)
 
 from bottle import route, run, request, response, template
 from gitmark import gitMark
@@ -38,4 +38,4 @@ def create():
 
     return template("create")
 
-run(host="localhost", port="8080", reloader=True)
+run(host="localhost", port="8080", reloader=False)
