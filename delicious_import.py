@@ -25,7 +25,8 @@ class delicious_import(object):
         x = minidom.parseString(content)
         
         # sample post: <post href="http://www.pixelbeat.org/cmdline.html" hash="e3ac1d1e4403d077ee7e65f62a55c406" description="Linux Commands - A practical reference" tag="linux tutorial reference" time="2010-11-29T01:07:35Z" extended="" meta="c79362665abb0303d577b6b9aa341599" />
-        for post in x.getElementsByTagName("post"):
+        post_list = x.getElementsByTagName('post')
+        for post_index, post in enumerate(post_list):
             url = post.getAttribute('href')
             desc = post.getAttribute('description')
             tags = ",".join([t for t in post.getAttribute('tag').split()])
@@ -39,6 +40,10 @@ class delicious_import(object):
             args = [url]
 
             g = gitMark(options, args)
+            if post_list.length > 1:
+                print '%d of %d bookmarks imported (%d%%)' % (
+                    post_index + 1, post_list.length,
+                    (post_index + 1.0) / post_list.length * 100)
         
 
 if __name__ == '__main__':
