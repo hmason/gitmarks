@@ -50,11 +50,8 @@ class gitMark(object):
             self.gitPush()
 
     def gitAdd(self, files):
-        for f in files:
-            cmd = 'git add %s' % f
-            pipe = subprocess.Popen(cmd, shell=True)
-            pipe.wait()
-            
+        subprocess.call(['git', 'add'] + files)
+        
     def gitCommit(self, msg):
         subprocess.call(['git', 'commit', '-m', msg])
         
