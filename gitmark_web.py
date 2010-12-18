@@ -1,7 +1,7 @@
 """
 Web frontend to gitmarks for use as a bookmarklet:
 
-javascript:(function(){void(open('http://localhost:8080/new?url='+window.location,'gitmark','resizable,scrollbars,width=250,height=250'))})();
+javascript:(function(){void(open('http://localhost:44865/new?url='+window.location,'gitmark','resizable,scrollbars,width=250,height=250'))})();
 """
 
 import bottle
@@ -9,6 +9,7 @@ bottle.debug(False)
 
 from bottle import route, run, request, response, template
 from gitmark import gitMark
+import settings
 
 @route("/new")
 def new():
@@ -38,4 +39,4 @@ def create():
 
     return template("create")
 
-run(host="localhost", port="8080", reloader=False)
+run(host="localhost", port=settings.GITMARKS_WEB_PORT, reloader=False)

@@ -45,17 +45,17 @@ python delicious_import.py [username] [password]
 (be patient if you have a lot of them.)
 
 
-===
-Web
-===
+=============================
+Using the Browser Bookmarklet
+=============================
 
-Run the gitmark_web server:
+First, run the gitmark_web server:
 
 python gitmark_web.py
 
-Copy this bookmarklet to your browser:
+Copy this bookmarklet to your browser (where 44865 is the port you set in settings.py):
 
-javascript:(function(){void(open('http://localhost:8080/new?url='+window.location,'gitmark','resizable,scrollbars,width=250,height=250'))})();
+javascript:(function(){void(open('http://localhost:44865/new?url='+window.location,'gitmark','resizable,scrollbars,width=250,height=250'))})();
 
 
 =======
