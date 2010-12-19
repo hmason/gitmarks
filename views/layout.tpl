@@ -35,10 +35,20 @@
       color: #f00;
       font-weight: bold;
     }
+
+    .footer {
+      border-top: 1px solid #ccc;
+      font-size: 11px;
+      padding-top: 5px;
+    }
   </style>
 </head>
 
 <body>  
   %include
+
+  <div class="footer">
+    <a target="_blank" href="https://github.com/hmason/gitmarks">gitmarks home</a>
+  </div>
 </body>
 </html>
