@@ -9,6 +9,10 @@ from bottle import route, run, request, response, template
 from gitmark import gitMark
 import settings
 
+@route("/")
+def index():
+    return template("index", port = settings.GITMARKS_WEB_PORT)
+
 @route("/new")
 def new():
     url = request.GET.get('url')
@@ -21,6 +25,7 @@ def create():
     tags = request.forms.get('tags', '').strip()
     message = request.forms.get('message', '').strip()
     push = request.forms.get('nopush', True)
+
     if push == '1':
         push = False
 

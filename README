@@ -53,9 +53,11 @@ First, run the gitmark_web server:
 
 python gitmark_web.py
 
-Copy this bookmarklet to your browser (where 44865 is the port you set in settings.py):
+Then, go to the following URL and drag the bookmarklet into your browser's toolbar:
 
-javascript:(function(){void(open('http://localhost:44865/new?url='+window.location,'gitmark','resizable,scrollbars,width=250,height=250'))})();
+http://localhost:44865/
+
+(where 44865 is the port you set in settings.py)
 
 
 =======
