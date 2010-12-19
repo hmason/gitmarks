@@ -20,16 +20,17 @@ def create():
     url = request.forms.get('url', '').strip()
     tags = request.forms.get('tags', '').strip()
     message = request.forms.get('message', '').strip()
-    push = False if (request.forms.get('nopush', '').strip() == '1') else True
+    push = request.forms.get('nopush', True)
+    if push == '1':
+        push = False
 
-    if url == "":
-        return template("new", url=url, tags=tags, message=message, error="URL is required")
+    if not url:
+        return template("new", url=url, tags=tags, message=message, error="URL is required.")
 
-    else:
-        options = {}
-        options['tags'] = tags
-        options['push'] = push
-        options['msg']  = message
+    options = {}
+    options['tags'] = tags
+    options['push'] = push
+    options['msg']  = message
 
     args = [url]
 
