@@ -66,13 +66,23 @@ class gitMark(object):
         pipe.wait()
         
     def saveContent(self, filename, content):
-        f = open('%s%s' % (CONTENT_PATH, filename), 'w')
+        try:
+            f = open('%s%s' % (CONTENT_PATH, filename), 'w')
+        except IOError: #likely the dir doesn't exist
+            os.mkdir(CONTENT_PATH,0755)
+            f = open('%s%s' % (CONTENT_PATH, filename), 'w')
+            
         f.write(content)
         f.close()
         return '%s%s' % (CONTENT_PATH, filename)
         
     def saveTagData(self, tag, url, title, content_filename):
-        tag_writer = csv.writer(open('%s%s' % (TAG_PATH, tag), 'a'))
+        try:
+            tag_writer = csv.writer(open('%s%s' % (TAG_PATH, tag), 'a'))
+        except IOError:
+            os.mkdir(TAG_PATH,0755)
+            tag_writer = csv.writer(open('%s%s' % (TAG_PATH, tag), 'a'))
+            
         tag_writer.writerow([url, title, content_filename])
         return '%s%s' % (TAG_PATH, tag)
 
