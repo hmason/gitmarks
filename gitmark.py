@@ -28,7 +28,12 @@ class gitMark(object):
     def __init__(self, options, args):
         modified = [] # track files we need to add - a hack, because it will add files that are already tracked by git
         
-        url = args[0].strip('/')
+        try:
+            url = args[0].strip('/')
+        except IndexError, e:
+            print >>sys.stderr, ("Error: No url found")
+            return
+
         content = self.getContent(url)
         title = self.parseTitle(content)
         content_filename = self.generateHash(url)
@@ -116,7 +121,7 @@ class gitMark(object):
 
 
 if __name__ == '__main__':
-    parser = OptionParser("usage: %prog [options]")
+    parser = OptionParser("usage: %prog [options] <url>")
     parser.add_option("-p", "--push", dest="push", action="store_false", default=True, help="don't push to origin.")
     parser.add_option("-t", "--tags", dest="tags", action="store", default='notag', help="comma seperated list of tags")
     parser.add_option("-m", "--message", dest="msg", action="store", default=None, help="specify a commit message (default is 'adding [url]')")
